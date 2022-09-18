@@ -1,8 +1,11 @@
 package main
 
 import (
+	"book/service/search/api/internal/middleware"
 	"flag"
 	"fmt"
+	"github.com/zeromicro/go-zero/core/logx"
+	"net/http"
 
 	"book/service/search/api/internal/config"
 	"book/service/search/api/internal/handler"
@@ -22,6 +25,16 @@ func main() {
 
 	server := rest.MustNewServer(c.RestConf)
 	defer server.Stop()
+
+	// 全局中间件
+	server.Use(func(next http.HandlerFunc) http.HandlerFunc {
+		return func(w http.ResponseWriter, r *http.Request) {
+			logx.Info("global middleware")
+			next(w, r)
+		}
+	})
+	// 在中间件里调用其它服务
+	server.Use(middleware.WithAnotherService(new(middleware.AnotherService)))
 
 	ctx := svc.NewServiceContext(c)
 	handler.RegisterHandlers(server, ctx)
