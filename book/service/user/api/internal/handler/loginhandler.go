@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"book/common/response"
 	"net/http"
 
 	"book/service/user/api/internal/logic"
@@ -19,10 +20,6 @@ func loginHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 
 		l := logic.NewLoginLogic(r.Context(), svcCtx)
 		resp, err := l.Login(&req)
-		if err != nil {
-			httpx.Error(w, err)
-		} else {
-			httpx.OkJson(w, resp)
-		}
+		response.Response(w, resp, err)
 	}
 }
