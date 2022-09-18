@@ -1,7 +1,7 @@
 package logic
 
 import (
-	errorx "book/common"
+	"book/common/errorx"
 	"book/service/user/model"
 	"context"
 	"github.com/golang-jwt/jwt/v4"

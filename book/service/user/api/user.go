@@ -1,7 +1,7 @@
 package main
 
 import (
-	errorx "book/common"
+	"book/common/errorx"
 	"book/service/user/api/internal/config"
 	"book/service/user/api/internal/handler"
 	"book/service/user/api/internal/svc"
